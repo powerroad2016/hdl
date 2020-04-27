@@ -59,10 +59,10 @@ module axi_logic_analyzer_reg (
   output      [15:0]  od_pp_n,
 
   output      [31:0]  trigger_holdoff,
-
   input               triggered,
-
   output              streaming,
+  output      [ 9:0]  data_delay_control,
+  input               rate_sync_ack,
 
  // bus interface
 
@@ -100,8 +100,25 @@ module axi_logic_analyzer_reg (
   reg     [31:0]  up_trigger_holdoff = 32'h0;
   reg             up_triggered = 0;
   reg             up_streaming = 0;
+  reg     [ 9:0]  up_data_delay_control = 10'd0;
+
+  reg             up_sync_ack_m1 = 1'b0;
+  reg             up_sync_ack_m2 = 1'b0;
+  reg             up_sync_ack_m3 = 1'b0;
 
   wire    [15:0]  up_input_data;
+
+  always @(negedge up_rstn or posedge up_clk) begin
+    if (up_rstn == 0) begin
+      up_sync_ack_m1 <= 1'b0;
+      up_sync_ack_m2 <= 1'b0;
+      up_sync_ack_m3 <= 1'b0;
+    end else begin
+      up_sync_ack_m1 <= rate_sync_ack;
+      up_sync_ack_m2 <= up_sync_ack_m1;
+      up_sync_ack_m3 <= up_sync_ack_m2;
+    end
+  end
 
   always @(negedge up_rstn or posedge up_clk) begin
     if (up_rstn == 0) begin
@@ -125,6 +142,7 @@ module axi_logic_analyzer_reg (
       up_triggered <= 1'd0;
       up_streaming <= 1'd0;
       up_trigger_holdoff <= 32'h0;
+      up_data_delay_control <= 10'h0;
     end else begin
       up_wack <= up_wreq;
       if ((up_wreq == 1'b1) && (up_waddr[4:0] == 5'h1)) begin
@@ -186,6 +204,11 @@ module axi_logic_analyzer_reg (
       if ((up_wreq == 1'b1) && (up_waddr[4:0] == 5'h14)) begin
         up_trigger_holdoff <= up_wdata[31:0];
       end
+      if ((up_wreq == 1'b1) && (up_waddr[4:0] == 5'h15)) begin
+        up_data_delay_control <= up_wdata[9:0];
+      end else if (up_sync_ack_m3) begin
+        up_data_delay_control[8] <= 1'b0;
+      end
     end
   end
 
@@ -220,6 +243,7 @@ module axi_logic_analyzer_reg (
           5'h12: up_rdata <= {31'h0,up_triggered};
           5'h13: up_rdata <= {31'h0,up_streaming};
           5'h14: up_rdata <= up_trigger_holdoff;
+          5'h15: up_rdata <= {26'h0,up_data_delay_control};
           default: up_rdata <= 0;
         endcase
       end else begin
@@ -230,7 +254,7 @@ module axi_logic_analyzer_reg (
 
   ad_rst i_core_rst_reg (.rst_async(~up_rstn), .clk(clk), .rstn(), .rst(reset));
 
-   up_xfer_cntrl #(.DATA_WIDTH(323)) i_xfer_cntrl (
+   up_xfer_cntrl #(.DATA_WIDTH(333)) i_xfer_cntrl (
     .up_rstn (up_rstn),
     .up_clk (up_clk),
     .up_data_cntrl ({ up_streaming,             // 1
@@ -249,7 +273,8 @@ module axi_logic_analyzer_reg (
                       up_edge_detect_enable,    // 18
                       up_io_selection,          // 16
                       up_divider_counter_pg,    // 32
-                      up_divider_counter_la}),  // 32
+                      up_divider_counter_la,    // 32
+                      up_data_delay_control}),  // 10
 
     .up_xfer_done (),
     .d_rst (1'b0),
@@ -270,7 +295,8 @@ module axi_logic_analyzer_reg (
                       edge_detect_enable,     // 18
                       io_selection,           // 16
                       divider_counter_pg,     // 32
-                      divider_counter_la}));  // 32
+                      divider_counter_la,     // 32
+                      data_delay_control}));  // 10
 
  up_xfer_status #(.DATA_WIDTH(16)) i_xfer_status (
 
