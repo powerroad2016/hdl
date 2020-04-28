@@ -110,12 +110,14 @@ module system_top (
   output           ad77681_spi_cs,
   input            ad77681_drdy,
 
-  output           ad77681_reset,
-  inout            ad77681_sync_in,
-  input            ad77681_fda_dis,
-  input            ad77681_fda_mode,
-  input            ad77681_dac_buf_en,
-  inout            ad77681_io_int);
+  output           ad77681_reset_adc,
+  output           ad77681_shutdown,
+  output           ad77681_csb_aux,
+  output           ad77681_sw_ff,
+  output           ad77681_drdy_aux,
+  output           ad77681_blue_led,
+  output           ad77681_yellow_led,
+  input            ad77681_sync_in);
 
   // internal signals
 
@@ -125,20 +127,22 @@ module system_top (
 
   // instantiations
 
-  assign gpio_i[63:39] = gpio_o[63:39];
+  assign gpio_i[63:41] = gpio_o[63:41];
   
-  assign gpio_i[38] = ad77681_io_int;
+  assign ad77681_blue_led = gpio_o[40];
+  assign ad77681_yellow_led = gpio_o[39];
+  assign ad77681_sw_ff = gpio_o[38];
   assign gpio_i[37] = ad77681_drdy;
-  assign gpio_i[36] = ad77681_fda_dis;
-  assign gpio_i[35] = ad77681_fda_mode;
-  assign gpio_i[34] = ad77681_dac_buf_en;
+  assign ad77681_shutdown = gpio_o[36];
+  assign ad77681_drdy_aux = gpio_o[35];
+  assign ad77681_csb_aux = gpio_o[34];
   assign gpio_i[33] = ad77681_sync_in;
-  assign ad77681_reset = gpio_o[32];
+  assign ad77681_reset_adc = gpio_o[32];
+ 
+  assign gpio_i[31:12] = gpio_o[31:12];
 
   assign gpio_i[11:4] = gpio_bd_i[7:0];
   assign gpio_bd_o[3:0] = gpio_o[3:0];
-
-  assign gpio_i[31:12] = gpio_o[31:12];
 
   system_bd i_system_bd (
     .sys_clk_clk (sys_clk),

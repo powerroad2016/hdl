@@ -8,7 +8,6 @@ source $ad_hdl_dir/projects/common/de10nano/de10nano_system_assign.tcl
 
 # files
 
-
 # SPI interface
 
 set_location_assignment PIN_AH12 -to ad77681_spi_sclk      ; ##   Arduino_IO13
@@ -23,28 +22,28 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_spi_cs
 
 # reset and GPIO signals
 
-set_location_assignment PIN_AG9  -to ad77681_reset         ; ##   Arduino_IO3
-set_location_assignment PIN_AE15 -to ad77681_fda_dis       ; ##   Arduino_IO9
-set_location_assignment PIN_AF17 -to ad77681_fda_mode      ; ##   Arduino_IO8
-set_location_assignment PIN_U13  -to ad77681_dac_buf_en    ; ##   Arduino_IO5
-set_location_assignment PIN_U14  -to ad77681_io_int        ; ##   Arduino_IO4
+set_location_assignment PIN_AE15 -to ad77681_shutdown      ; ##   Arduino_IO9
+set_location_assignment PIN_AH8	 -to ad77681_reset_adc     ; ##   Arduino_IO7
+set_location_assignment PIN_U13  -to ad77681_csb_aux       ; ##   Arduino_IO5
+set_location_assignment PIN_U14  -to ad77681_sw_ff         ; ##   Arduino_IO4
+set_location_assignment PIN_AG9  -to ad77681_drdy_aux      ; ##   Arduino_IO3
+set_location_assignment PIN_AF13 -to ad77681_blue_led      ; ##   Arduino_IO1
+set_location_assignment PIN_AG13 -to ad77681_yellow_led    ; ##   Arduino_IO0
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_reset
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_fda_dis
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_fda_mode
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_dac_buf_en
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_io_int
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_shutdown
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_reset_adc
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_csb_aux
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_sw_ff
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_drdy_aux
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_blue_led
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_yellow_led
 
 # synchronization and timing
 
-set_location_assignment PIN_AG10 -to ad77681_drdy          ; ##   Arduino_IO2
 set_location_assignment PIN_AG8  -to ad77681_sync_in       ; ##   Arduino_IO6
+set_location_assignment PIN_AG10 -to ad77681_drdy          ; ##   Arduino_IO2
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_drdy
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_sync_in
-
-
-# set optimization to get a better timing closure
-#set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_drdy
 
 execute_flow -compile
