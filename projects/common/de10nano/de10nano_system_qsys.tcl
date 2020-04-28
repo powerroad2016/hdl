@@ -39,9 +39,9 @@ set_instance_parameter_value sys_hps {UART1_Mode} {N/A}
 set_instance_parameter_value sys_hps {I2C0_PinMuxing} {FPGA}
 set_instance_parameter_value sys_hps {I2C0_Mode} {Full}
 set_instance_parameter_value sys_hps {desired_cfg_clk_mhz} {80.0}
-set_instance_parameter_value sys_hps {S2FCLK_USER0CLK_Enable} {1}
+set_instance_parameter_value sys_hps {S2FCLK_USER0CLK_Enable} {0}
 set_instance_parameter_value sys_hps {S2FCLK_USER1CLK_Enable} {1}
-set_instance_parameter_value sys_hps {S2FCLK_USER0CLK_FREQ} {50.0}
+set_instance_parameter_value sys_hps {S2FCLK_USER0CLK_FREQ} {0}
 set_instance_parameter_value sys_hps {S2FCLK_USER1CLK_FREQ} {80.0}
 set_instance_parameter_value sys_hps {HPS_PROTOCOL} {DDR3}
 set_instance_parameter_value sys_hps {MEM_CLK_FREQ} {400.0}

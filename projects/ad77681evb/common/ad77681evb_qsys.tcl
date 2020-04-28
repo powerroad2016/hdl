@@ -16,7 +16,7 @@
     set_instance_parameter_value axi_dmac_0 {HAS_AXIS_TLAST} {0}
 
     add_connection axi_dmac_0.m_dest_axi sys_hps.f2h_sdram0_data
-    add_connection sys_clk.clk axi_dmac_0.if_s_axis_aclk
+    add_connection sys_dma_clk.clk axi_dmac_0.if_s_axis_aclk
     add_connection sys_clk.clk axi_dmac_0.s_axi_clock
     add_connection sys_clk.clk_reset axi_dmac_0.m_dest_axi_reset
     add_connection sys_clk.clk_reset axi_dmac_0.s_axi_reset
