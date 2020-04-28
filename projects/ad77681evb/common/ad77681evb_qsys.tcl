@@ -1,4 +1,4 @@
-    
+  
     # dma
 
     add_instance axi_dmac_0 axi_dmac
@@ -33,7 +33,7 @@
     set_instance_parameter_value axi_spi_engine_0 {NUM_OF_SDI}  {1}
     set_instance_parameter_value axi_spi_engine_0 {NUM_OFFLOAD} {1}
 
-    add_connection sys_clk.clk axi_spi_engine_0.if_spi_clk
+    add_connection sys_dma_clk.clk axi_spi_engine_0.if_spi_clk
     add_connection sys_clk.clk axi_spi_engine_0.s_axi_clock
     add_connection sys_clk.clk_reset axi_spi_engine_0.s_axi_reset	
 
@@ -43,7 +43,7 @@
     set_instance_parameter_value spi_engine_execution_0 {DATA_WIDTH} {32}
     set_instance_parameter_value spi_engine_execution_0 {NUM_OF_SDI} {1}
 
-    add_connection sys_clk.clk spi_engine_execution_0.if_clk
+    add_connection sys_dma_clk.clk spi_engine_execution_0.if_clk
     add_connection axi_spi_engine_0.if_spi_resetn spi_engine_execution_0.if_resetn
     add_interface spi_engine_execution_0_if_cs conduit end
     set_interface_property spi_engine_cs EXPORT_OF spi_engine_execution_0.if_cs
@@ -62,7 +62,7 @@
     set_instance_parameter_value spi_engine_interconnect_0 {DATA_WIDTH} {32}
     set_instance_parameter_value spi_engine_interconnect_0 {NUM_OF_SDI} {1}
 
-    add_connection sys_clk.clk spi_engine_interconnect_0.if_clk
+    add_connection sys_dma_clk.clk spi_engine_interconnect_0.if_clk
     add_connection axi_spi_engine_0.if_spi_resetn spi_engine_interconnect_0.if_resetn
 
     # spi_engine_offload
@@ -72,8 +72,8 @@
     set_instance_parameter_value spi_engine_offload_0 {DATA_WIDTH} {32}
     set_instance_parameter_value spi_engine_offload_0 {NUM_OF_SDI} {1}
 
-    add_connection sys_clk.clk spi_engine_offload_0.if_ctrl_clk
-    add_connection sys_clk.clk spi_engine_offload_0.if_spi_clk
+    add_connection sys_dma_clk.clk spi_engine_offload_0.if_ctrl_clk
+    add_connection sys_dma_clk.clk spi_engine_offload_0.if_spi_clk
     add_connection axi_spi_engine_0.if_spi_resetn spi_engine_offload_0.if_spi_resetn
     add_interface spi_engine_offload_0_if_trigger conduit end
     set_interface_property spi_engine_trigger EXPORT_OF spi_engine_offload_0.if_trigger
