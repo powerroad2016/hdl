@@ -136,8 +136,8 @@ proc ad_dma_interconnect {m_port m_id} {
 
 add_instance sys_dma_clk clock_source
 set_instance_parameter_value sys_dma_clk {clockFrequency} {40000000.0}
-add_connection sys_clk.clk sys_dma_clk.clk_in
 add_connection sys_clk.clk_reset sys_dma_clk.clk_in_reset
+add_connection sys_hps.h2f_user1_clock sys_dma_clk.clk_in
 add_connection sys_dma_clk.clk sys_hps.f2h_sdram1_clock
 add_connection sys_dma_clk.clk sys_hps.f2h_sdram2_clock
 
