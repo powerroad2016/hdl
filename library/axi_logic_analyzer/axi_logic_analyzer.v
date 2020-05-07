@@ -114,6 +114,39 @@ module axi_logic_analyzer (
   reg     [31:0]    trigger_holdoff_counter = 32'd0;
   reg     [ 4:0]    adc_data_delay = 5'd0;
 
+  reg     [15:0]    data_m_0;
+  reg     [15:0]    data_m_1;
+  reg     [15:0]    data_m_2;
+  reg     [15:0]    data_m_3;
+  reg     [15:0]    data_m_4;
+  reg     [15:0]    data_m_5;
+  reg     [15:0]    data_m_6;
+  reg     [15:0]    data_m_7;
+  reg     [15:0]    data_m_8;
+  reg     [15:0]    data_m_9;
+  reg     [15:0]    data_m_10;
+  reg     [15:0]    data_m_11;
+  reg     [15:0]    data_m_12;
+  reg     [15:0]    data_m_13;
+  reg     [15:0]    data_m_14;
+  reg     [15:0]    data_m_15;
+  reg     [15:0]    data_m_16;
+  reg     [15:0]    data_m_17;
+  reg     [15:0]    data_m_18;
+  reg     [15:0]    data_m_19;
+  reg     [15:0]    data_m_20;
+  reg     [15:0]    data_m_21;
+  reg     [15:0]    data_m_22;
+  reg     [15:0]    data_m_23;
+  reg     [15:0]    data_m_24;
+  reg     [15:0]    data_m_25;
+  reg     [15:0]    data_m_26;
+  reg     [15:0]    data_m_27;
+  reg     [15:0]    data_m_28;
+  reg     [15:0]    data_m_29;
+  reg     [15:0]    data_m_30;
+  reg     [15:0]    data_m_31;
+
   reg               external_valid_m = 1'b0;
   reg               sync_ack = 1'b0;
 
@@ -239,39 +272,6 @@ module axi_logic_analyzer (
   // - synchronization
   // - compensate for m2k adc path delay
 
-  reg [15:0] data_m_0;
-  reg [15:0] data_m_1;
-  reg [15:0] data_m_2;
-  reg [15:0] data_m_3;
-  reg [15:0] data_m_4;
-  reg [15:0] data_m_5;
-  reg [15:0] data_m_6;
-  reg [15:0] data_m_7;
-  reg [15:0] data_m_8;
-  reg [15:0] data_m_9;
-  reg [15:0] data_m_10;
-  reg [15:0] data_m_11;
-  reg [15:0] data_m_12;
-  reg [15:0] data_m_13;
-  reg [15:0] data_m_14;
-  reg [15:0] data_m_15;
-  reg [15:0] data_m_16;
-  reg [15:0] data_m_17;
-  reg [15:0] data_m_18;
-  reg [15:0] data_m_19;
-  reg [15:0] data_m_20;
-  reg [15:0] data_m_21;
-  reg [15:0] data_m_22;
-  reg [15:0] data_m_23;
-  reg [15:0] data_m_24;
-  reg [15:0] data_m_25;
-  reg [15:0] data_m_26;
-  reg [15:0] data_m_27;
-  reg [15:0] data_m_28;
-  reg [15:0] data_m_29;
-  reg [15:0] data_m_30;
-  reg [15:0] data_m_31;
-
   always @(posedge clk_out) begin
     if (sample_valid_la == 1'b1) begin
       data_m_0  <= data_i;
@@ -320,6 +320,8 @@ module axi_logic_analyzer (
 
   assign up_data_delay = data_delay_control[4:0];
   assign rate_ctrl_sync = data_delay_control[8];
+
+  // select if the delay taps number is chosen by the user or automatically
   assign master_delay_ctrl = data_delay_control[9];
   assign in_data_delay = master_delay_ctrl ? up_data_delay : adc_data_delay;
 
