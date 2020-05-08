@@ -20,6 +20,14 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_spi_miso
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_spi_mosi
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ad77681_spi_cs
 
+# I2C
+
+set_location_assignment PIN_AG11  -to i2c_scl          ; ##   Arduino_IO15
+set_location_assignment PIN_AH9   -to i2c_sda          ; ##   Arduino_IO14
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to i2c_scl
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to i2c_sda
+
 # reset and GPIO signals
 
 set_location_assignment PIN_AE15 -to ad77681_shutdown      ; ##   Arduino_IO9

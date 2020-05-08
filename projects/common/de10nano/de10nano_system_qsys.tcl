@@ -99,12 +99,13 @@ add_connection sys_clk.clk sys_hps.f2h_sdram0_clock
 add_connection sys_clk.clk sys_hps.h2f_axi_clock
 add_connection sys_clk.clk sys_hps.f2h_axi_clock
 add_connection sys_clk.clk sys_hps.h2f_lw_axi_clock
-add_interface sys_hps_i2c0 conduit end
-set_interface_property sys_hps_i2c0 EXPORT_OF sys_hps.i2c0
-add_interface sys_hps_i2c0_clk clock source
-set_interface_property sys_hps_i2c0_clk EXPORT_OF sys_hps.i2c0_clk
-add_interface sys_hps_i2c0_scl_in clock sink
-set_interface_property sys_hps_i2c0_scl_in EXPORT_OF sys_hps.i2c0_scl_in
+
+add_interface sys_hps_i2c_0 conduit end
+set_interface_property sys_hps_i2c_0 EXPORT_OF sys_hps.i2c0
+add_interface sys_hps_i2c_0_scl_out clock source
+set_interface_property sys_hps_i2c_0_scl_out EXPORT_OF sys_hps.i2c0_clk
+add_interface sys_hps_i2c_0_scl_in clock sink
+set_interface_property sys_hps_i2c_0_scl_in EXPORT_OF sys_hps.i2c0_scl_in
 
 # cpu/hps handling
 

@@ -104,6 +104,9 @@ module system_top (
 
   // ad77681
 
+  inout            i2c_sda,
+  inout            i2c_scl,
+  
   input            ad77681_spi_miso,
   output           ad77681_spi_mosi,
   output           ad77681_spi_sclk,
@@ -143,6 +146,16 @@ module system_top (
 
   assign gpio_i[11:4] = gpio_bd_i[7:0];
   assign gpio_bd_o[3:0] = gpio_o[3:0];
+
+  // IO Buffers for I2C
+
+  wire i2c_0_scl_out;
+  wire i2c_0_scl_in;
+  wire i2c_0_sda_in;
+  wire i2c_0_sda_oe;
+
+  ALT_IOBUF scl_iobuf (.i(1'b0), .oe(i2c_0_scl_out), .o(i2c_0_scl_in), .io(i2c_scl));
+  ALT_IOBUF sda_iobuf (.i(1'b0), .oe(i2c_0_sda_oe), .o(i2c_0_sda_in), .io(i2c_sda));
 
   system_bd i_system_bd (
     .sys_clk_clk (sys_clk),
@@ -201,7 +214,11 @@ module system_top (
     .sys_hps_hps_io_hps_io_spim1_inst_CLK (spim1_clk),
     .sys_hps_hps_io_hps_io_spim1_inst_MOSI (spim1_mosi),
     .sys_hps_hps_io_hps_io_spim1_inst_MISO (spim1_miso),
-    .sys_hps_hps_io_hps_io_spim1_inst_SS0 (spim1_ss0),
+    .sys_hps_hps_io_hps_io_spim1_inst_SS0 (spim1_ss0),      
+    .sys_hps_i2c_0_sda (i2c_0_sda_in),
+    .sys_hps_i2c_0_out_data (i2c_0_sda_oe),
+    .sys_hps_i2c_0_scl_out_clk (i2c_0_scl_out),
+    .sys_hps_i2c_0_scl_in_clk (i2c_0_scl_in),
     .sys_gpio_bd_in_port (gpio_i[31:0]),
     .sys_gpio_bd_out_port (gpio_o[31:0]),
     .sys_gpio_in_export (gpio_i[63:32]),
