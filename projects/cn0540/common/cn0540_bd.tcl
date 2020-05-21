@@ -8,9 +8,6 @@ create_bd_port -dir I adc_data_ready
 ad_ip_instance axi_iic axi_iic_cn0540
 ad_connect iic_cn0540 axi_iic_cn0540/iic
 
-#ad_connect  sys_concat_intc/In11  axi_iic_cn0540/iic2intc_irpt
-ad_cpu_interrupt "ps-8" "mb-8" axi_iic_cn0540/iic2intc_irpt
-
 # create a SPI Engine architecture for ADC
 
 create_bd_cell -type hier spi_adc
@@ -85,17 +82,14 @@ ad_ip_parameter axi_cn0540_dma CONFIG.DMA_2D_TRANSFER 0
 ad_ip_parameter axi_cn0540_dma CONFIG.DMA_DATA_WIDTH_SRC 32
 ad_ip_parameter axi_cn0540_dma CONFIG.DMA_DATA_WIDTH_DEST 64
 
-ad_ip_parameter sys_ps7 CONFIG.PCW_EN_CLK2_PORT 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_EN_RST2_PORT 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA2_PERIPHERAL_FREQMHZ 40.0
-ad_connect sys_40m_clk sys_ps7/FCLK_CLK2
+ad_connect  sys_40m_clk sys_ps7/FCLK_CLK2
 
 ad_connect  sys_cpu_clk spi_adc/clk
-ad_connect  sys_40m_clk spi_adc/spi_clk
 ad_connect  sys_cpu_resetn spi_adc/resetn
 ad_connect  sys_cpu_resetn axi_cn0540_dma/m_dest_axi_aresetn
 
 ad_connect  spi_adc/m_spi adc_spi
+ad_connect  sys_40m_clk spi_adc/spi_clk
 ad_connect  axi_cn0540_dma/s_axis spi_adc/M_AXIS_SAMPLE
 
 # AXI address definitions
@@ -108,6 +102,7 @@ ad_connect sys_40m_clk axi_cn0540_dma/s_axis_aclk
 
 # interrupts
 
+ad_cpu_interrupt "ps-8"  "mb-8"  axi_iic_cn0540/iic2intc_irpt
 ad_cpu_interrupt "ps-13" "mb-13" axi_cn0540_dma/irq
 ad_cpu_interrupt "ps-11" "mb-11" spi_adc/irq
 

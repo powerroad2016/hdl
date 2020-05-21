@@ -21,5 +21,5 @@ set_property -dict {PACKAGE_PIN  U14 IOSTANDARD LVCMOS33}                       
 set_property -dict {PACKAGE_PIN  R17 IOSTANDARD LVCMOS33}                           [get_ports cn0540_sync_in]     ; ## CK_IO6
 set_property -dict {PACKAGE_PIN  T14 IOSTANDARD LVCMOS33}                           [get_ports cn0540_drdy]        ; ## CK_IO2
 
-set_property -dict {PACKAGE_PIN  P16 IOSTANDARD LVCMOS33}                           [get_ports iic_cn0540_scl_io]  ; ## CK_SCL
-set_property -dict {PACKAGE_PIN  P15 IOSTANDARD LVCMOS33}                           [get_ports iic_cn0540_sda_io]  ; ## CK_SDA
+set_property -dict {PACKAGE_PIN  P16 IOSTANDARD LVCMOS33}                           [get_ports cn0540_scl]         ; ## CK_SCL
+set_property -dict {PACKAGE_PIN  P15 IOSTANDARD LVCMOS33}                           [get_ports cn0540_sda]         ; ## CK_SDA

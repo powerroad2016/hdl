@@ -63,8 +63,8 @@ module system_top (
   inout   [1:0]   btn,
   inout   [5:0]   led,
 
-  inout           iic_cn0540_scl_io,
-  inout           iic_cn0540_sda_io,
+  inout           cn0540_scl,
+  inout           cn0540_sda,
 
   inout           cn0540_shutdown,
   inout           cn0540_reset_adc,
@@ -157,8 +157,8 @@ module system_top (
     .adc_spi_cs (cn0540_spi_cs),
     .adc_spi_sclk (cn0540_spi_sclk),
     .adc_data_ready (cn0540_drdy),
-    .iic_cn0540_scl_io (iic_cn0540_scl_io),
-    .iic_cn0540_sda_io (iic_cn0540_sda_io),
+    .iic_cn0540_scl_io (cn0540_scl),
+    .iic_cn0540_sda_io (cn0540_sda),
     .spi0_clk_i (1'b0),
     .spi0_clk_o (),
     .spi0_csn_0_o (),
